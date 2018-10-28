@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>  
+<html lang="en">  
+<head>  
+    <title>图片轮播展示</title>  
+    <meta charset="utf-8">  
+    <style type="text/css">  
+      *{  
+        padding:0;  
+        margin:0;  
+      }  
+      #slide{  
+        width:100%;  
+        height:200px;  
+        position:relative;  
+        border:1px solid #ccc;  
+        margin:20px auto;  
+      }  
+      .content{  
+        position: absolute;  
+        width:740px;  
+        height:180px;  
+        border:1px solid #ccc;  
+        overflow: hidden;  
+        margin:auto;  
+        left:0;  
+        right:0;  
+        top:0;  
+        bottom:0;  
+      }  
+      ul li{  
+        list-style: none;  
+        width:100px;  
+        height:160px;  
+        float:left;  
+        margin-left: 20px;  
+        margin-top:10px;  
+      }  
+      ul li img{  
+        width:100px;  
+        height:160px;         
+      }  
+      #slide ul{   
+        position:absolute;      
+        -webkit-transition:all .27s ease-in;  
+        -moz-transition:all .27s ease-in;  
+        -o-transition:all .27s ease-in;  
+        transition:all .27s ease-in;  
+      }  
+      .move{  
+        width:50px;  
+        height:100px;  
+        cursor: pointer; 
+        position: absolute;
+        top: 50%;
+        transform:translateY(-50%);
+      }  
+      #prev{  
+        float:left;  
+      }  
+      #next{  
+        float:right;  
+      }  
+    </style>  
+      
+</head>  
+<body>  
+  <div id="slide" >  
+    <div >  
+      <img id="prev"class="move"src="images/prev.png"href="javascript:;">  
+    </div>  
+    <div class="content">  
+      <ul>  
+        <li><img src="images/1.jpg" alt=""></li>  
+        <li><img src="images/2.jpg" alt=""></li>  
+        <li><img src="images/3.jpg" alt=""></li>  
+        <li><img src="images/4.jpg" alt=""></li>  
+        <li><img src="images/5.jpg" alt=""></li>  
+        <li><img src="images/6.jpg" alt=""></li>  
+        <li><img src="images/7.jpg" alt=""></li>  
+        <li><img src="images/8.jpg" alt=""></li>  
+        <li><img src="images/9.jpg" alt=""></li>  
+      </ul>  
+    </div>  
+    <div >  
+      <img id="next" class="move"src="images/next.png" href="javascript:;" >  
+    </div>  
+  </div>  
+  <script type="text/javascript">  
+    var obj = document.getElementById('slide');  
+    var next = document.getElementById('next'),  
+        prev = document.getElementById('prev'),  
+        ul = obj.getElementsByTagName('ul')[0],  
+        liArr = obj.getElementsByTagName('li'),  
+        li_width = liArr[0].offsetWidth + 20,  
+        li_length = liArr.length,  
+        show_length = 6,  
+        index = 0;  
+    function slide(){  
+        ul.style.width = li_width * li_length + 'px';  
+        ul.style.left = 0;  
+    }  
+    function animation(){  
+        if(index <= 0){  
+            prev.style.cursor = 'default';  
+            next.style.cursor = 'pointer';  
+            index = 0;  
+        }else if(index >= (li_length - show_length)){  
+            prev.style.cursor = 'pointer';  
+            next.style.cursor = 'default';  
+            index = (li_length -show_length);  
+        }  
+        var goal = li_width * -index;  
+        ul.style.left = goal + 'px';  
+    }  
+    obj.onmousewheel = function(e){  
+        var d = parseInt(e.wheelDelta)> 0 ? -1:1;  //判断滚动方向  
+        index += 1*d;  
+        animation();  
+    }  
+    next.onclick = function(e){  
+        var target = e.target;  
+        prev.style.cursor = 'pointer';  
+        index += 1;  
+        animation();  
+    }  
+    prev.onclick = function(e){  
+        var target = e.target;  
+        next.style.cursor = 'pointer';  
+        index -= 1;  
+        animation();  
+    }  
+    slide();  
+    </script>  
+</body>  
+</html>  
